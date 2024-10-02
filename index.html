@@ -1,1 +1,84 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+     *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            background-color: black;
+        }
+        #watch{
+            color: bisque;
+            font-size: 50px;
+        }
+        button{
+            color: azure;
+            background-color: blue;
+            border-radius: 15px;
+            padding: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+</style>
+</head>
+<body>
+    <div id="watch">00:00:00</div>
+    <button onclick="start()">Start</button>
+    <button onclick="pause()">Pause</button>
+    <button onclick="reset()">Reset</button>
+<script>
+    let con = document.getElementById("watch")
+    let id = null
+    let hours = 0
+    let min = 0
+    let sec = 0
+    function formatTime(){
+        let h = hours<10?`0${hours}`:`${hours}`
+        let m = min<10?`0${min}`:`${min}`
+        let s = sec<10?`0${sec}`:`${sec}`
+        con.textContent = `${h}:${m}:${s}`
+    }
+    function update(){
+        sec++
+        if(sec === 60){
+            sec = 0
+            min++
+            if(min === 60){
+                min = 0
+                hours++
+            }
+        }
+        formatTime()
+    }
+    function start(){
+        if(!id){
+            id = setInterval(update,1000)
+        }
+    }
+    function pause(){
+        if(id!==null){
+            clearInterval(id)
+        }
+        id = null
+    }
+    function reset(){
+        clearInterval(id)
+        id = null
+        hours = 0
+        min = 0
+        sec = 0
+        formatTime()
+    }
+</script>
+</body>
+</html>
